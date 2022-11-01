@@ -3,7 +3,7 @@ from .models import Artist
 
 
 class ArtistSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=100, required=True)
+    stage_name = serializers.CharField(max_length=100, required=True)
     social_link = serializers.URLField(max_length=200, required=True)
     
     class Meta:

@@ -1,15 +1,7 @@
 from django.contrib import admin
-from django.forms import ValidationError
 from .models import Album, Song
 from .forms import AlbumForm
-
-
-# validation for the admin panel
-def validate_albums(self, Album):
-    print(self, Album)
-    if Album.songs.count() < 1:
-        raise ValidationError('Album must have at least one song')
-
+from .validators import validate_albums_form
 
 # create a song inline
 class SongInLine(admin.TabularInline):
@@ -26,7 +18,7 @@ class AlbumAdmin(admin.ModelAdmin):
     
     # return exception if album has no songs
     def save_model(self, request, obj, form, change):
-        validate_albums(self, obj)
+        validate_albums_form(self, obj)
         super().save_model(request, obj, form, change)
 
 

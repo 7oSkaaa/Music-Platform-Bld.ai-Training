@@ -1,12 +1,7 @@
 from django import forms
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm
 from .models import Album
-
-
-# validation in the form for albums
-def validate_albums(self, Album):
-    if Album.songs.count() < 1:
-        raise ValidationError('Album must have at least one song')
+from .validators import validate_albums_form
 
 
 class AlbumForm(forms.ModelForm):
@@ -14,7 +9,7 @@ class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = ['name', 'artist', 'release_date', 'cost', 'is_approved']
-        validators = [validate_albums]
+        validators = [validate_albums_form]
         
         
     # display help text in the admin panel
