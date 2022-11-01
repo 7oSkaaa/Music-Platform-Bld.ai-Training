@@ -4,7 +4,7 @@ from django.db.models import Q, Count
 
 class ArtistManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().annotate(approved_albums=Count('album', filter=Q(album__is_approved=True)))
+        return super().get_queryset().annotate(approved_albums=Count('albums', filter=Q(albums__is_approved=True)))
 
 
 class Artist(models.Model):
@@ -16,6 +16,8 @@ class Artist(models.Model):
     class Meta:
         # This is the default ordering of the model
         ordering = ['stage_name']
+        # This is the default table name of the model
+        db_table = 'artists'
 
 
     def __str__(self):
