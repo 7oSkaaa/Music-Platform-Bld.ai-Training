@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     # third party apps
     
     # local apps
+    'albums',
+    'artists',
 ]
 
 MIDDLEWARE = [
