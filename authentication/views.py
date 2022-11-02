@@ -3,12 +3,11 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from knox.auth import AuthToken
 from users.models import User
-from users.serializers import UserSerializer
 from .serializers import UserRegisterSerializer
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserRegisterSerializer
 
     def create(self, request, *args, **kwargs):
         # register user
@@ -16,17 +15,17 @@ class RegisterView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         
         # create user        
-        model_serializer = UserSerializer(data=serializer.data)
+        model_serializer = UserRegisterSerializer(data=serializer.data)
         model_serializer.is_valid(raise_exception=True)
-        
+                
         # store data
-        [username, email, password] = [model_serializer.data['username'], model_serializer.data['email'], model_serializer.data['password']]        
+        [username, email, password, bio] = [model_serializer.data['username'], model_serializer.data['email'], model_serializer.data['password'], model_serializer.data['bio']]        
         
         # create user object
-        user = User.objects.create_user(username=username, email=email, password=password)
-        
+        user = User.objects.create_user(username=username, email=email, password=password, bio=bio)
+                
         # create token
-        token = AuthToken.objects.create(user)
+        _, token = AuthToken.objects.create(user)
         
         return Response({
             "token" : token,
@@ -51,7 +50,7 @@ class LoginView(generics.CreateAPIView):
         user = serializer.validated_data['user']
         
         # create token        
-        token = AuthToken.objects.create(user)
+        _, token = AuthToken.objects.create(user)
 
         return Response({
             "token" : token,
