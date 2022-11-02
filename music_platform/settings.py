@@ -34,8 +34,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party apps
+    'imagekit',
+    'rest_framework',
+    'knox',
+    'model_utils',
+    'django_extensions',
+    'rest_framework.authtoken',
     
     # local apps
+    'albums',
+    'artists',
+    'users',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -45,9 +55,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'audiofield.middleware.threadlocals.ThreadLocals',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
 ROOT_URLCONF = 'music_platform.urls'
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {
@@ -116,6 +136,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
