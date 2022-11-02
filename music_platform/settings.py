@@ -36,11 +36,16 @@ INSTALLED_APPS = [
     # third party apps
     'imagekit',
     'rest_framework',
+    'knox',
     'model_utils',
+    'django_extensions',
+    'rest_framework.authtoken',
     
     # local apps
     'albums',
     'artists',
+    'users',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +57,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'audiofield.middleware.threadlocals.ThreadLocals',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),   
+}
 
 ROOT_URLCONF = 'music_platform.urls'
 
@@ -131,3 +140,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
