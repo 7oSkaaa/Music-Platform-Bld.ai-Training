@@ -18,6 +18,8 @@ django-rest-framework = "^0.1.0"
 django-extensions = "^3.2.1"
 knox = "^0.1.14"
 django-rest-knox = "^4.2.0"
+pyyaml = "^6.0"
+pytest-django = "^4.5.2"
 
 
 [build-system]

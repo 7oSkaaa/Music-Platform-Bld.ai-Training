@@ -4,12 +4,14 @@ from rest_framework import status
 from .serializers import ArtistSerializer
 from .models import Artist
 
+
 class ArtistView(APIView):
     
     # return all artists
     def get(self, request):
         serializer = ArtistSerializer(Artist.objects.all(), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
     
     # create a new artist
     def post(self, request):
@@ -32,6 +34,7 @@ class ArtistDetailView(APIView):
         except Artist.DoesNotExist:
             return Response({'message': 'Artist not found!'}, status=status.HTTP_404_NOT_FOUND)
     
+    
     # PUT a Artist by id
     def put(self, request, *args, **kwargs):
         try:
@@ -43,6 +46,8 @@ class ArtistDetailView(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Artist.DoesNotExist:
             return Response({'message': 'Artist not found!'}, status=status.HTTP_404_NOT_FOUND)
+    
+    
     # DELETE a Artist by id
     def delete(self, request, *args, **kwargs):
         try:

@@ -28,6 +28,8 @@ def validate_password_strong(password):
         raise ValidationError("Password must contain at least 1 letter.")
     if not any(char.isupper() for char in password):
         raise ValidationError("Password must contain at least 1 uppercase letter.")
+    if not any(char.islower() for char in password):
+        raise ValidationError("Password must contain at least 1 lowercase letter.")
     return password
 
 class UserRegisterSerializer(serializers.Serializer):
