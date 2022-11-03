@@ -2,9 +2,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-
 load_dotenv()
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,9 +58,9 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'knox.auth.TokenAuthentication',
     ]
 }
 
