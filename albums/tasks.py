@@ -29,13 +29,15 @@ def isActive(artist):
 
 @shared_task(bind=True)
 def send_mail_every_day_task(self):
-    for artist in Artist.objects.all():    
+    recipient_emails_list = []
+    for artist in Artist.objects.all(): 
         if not isActive(artist):
-            send_mail(
-                subject = "Warning ⚠️",
-                message= "You haven't created an album in the past 30 days.\nSo, we want to let you know that your inactivity is causing your popularity on our platform to decrease.",
-                from_email= settings.EMAIL_HOST_USER,
-                recipient_list=[artist.user.email,],
-                fail_silently= False,
-            )
+            recipient_emails_list.append(artist.user.email)
+    send_mail(
+        subject = "Warning ⚠️",
+        message= "You haven't created an album in the past 30 days.\nSo, we want to let you know that your inactivity is causing your popularity on our platform to decrease.",
+        from_email= settings.EMAIL_HOST_USER,
+        recipient_list=recipient_emails_list,
+        fail_silently= False,
+    )
     return 'Warning emails were sent successfully 📧'
