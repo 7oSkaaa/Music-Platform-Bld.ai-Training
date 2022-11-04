@@ -3,6 +3,11 @@ from imagekit.models import ImageSpecField
 from django.core.validators import FileExtensionValidator
 from model_utils.models import TimeStampedModel
 from artists.models import Artist
+from django.dispatch import receiver
+from django.utils.text import slugify
+from albums.tasks import send_mail_task
+from django.db.models.signals import post_save, pre_save
+
 
 class AlbumManager(models.Manager):
     def get_queryset(self):
@@ -43,3 +48,15 @@ class Song(models.Model):
     class Meta:
         # This is the default table name of the model
         db_table = 'songs'
+
+
+@receiver(post_save, sender=Album)
+def album_post_save(sender, instance, created, *args, **kwargs):
+    if created:
+        send_mail_task.delay(instance.name, instance.artist.id)
+
+
+@receiver(pre_save, sender=Song)
+def song_pre_save(sender, instance, *args, **kwargs):
+    if len(instance.name.strip()) == 0:
+        instance.name = slugify(instance.album.name)

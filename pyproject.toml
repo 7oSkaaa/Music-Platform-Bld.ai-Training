@@ -23,6 +23,9 @@ pytest-django = "^4.5.2"
 django-dotenv = "^1.4.2"
 python-dotenv = "^0.21.0"
 django-filter = "^22.1"
+redis = "^4.3.4"
+celery = "^5.2.7"
+poetry = "^1.2.2"
 
 
 [build-system]
