@@ -6,13 +6,16 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_create_artist_success(client):
+def test_create_artist_success(auth_client):
     
     endpoint = '/artists/'
     artist = {
-        "stage_name" : "Ahmed Hossam",
-        "social_link" : "https://www.facebook.com/ahmed.hossam.581"
+        "stage_name" : "artist",
+        "social_link" : "https://www.facebook.com/artist.581",
+        "user" : 1
     }
+    
+    client = auth_client()
     
     # test create artist with valid data
     response = client.post(f'{endpoint}', artist)
@@ -20,13 +23,16 @@ def test_create_artist_success(client):
         
         
 @pytest.mark.django_db
-def test_create_artist_fail(client):
+def test_create_artist_fail(auth_client):
     
     endpoint = '/artists/'
     artist = {
         "stage_name" : "Ahmed Hossam",
-        "social_link" : "https://www.facebook.com/ahmed.hossam.581"
+        "social_link" : "https://www.facebook.com/ahmed.hossam.581",
+        "user" : 1
     }
+    
+    client = auth_client()
     
     # test create artist with empty data
     response = client.post(f'{endpoint}', {})
@@ -49,13 +55,16 @@ def  test_get_artist_fail(client):
 
 
 @pytest.mark.django_db
-def test_get_artist_success(client):
+def test_get_artist_success(auth_client):
     
     endpoint = '/artists/'
     artist = {
         "stage_name" : "Ahmed Hossam",
-        "social_link" : "https://www.facebook.com/ahmed.hossam.581"
+        "social_link" : "https://www.facebook.com/ahmed.hossam.581",
+        "user" : 1
     }
+    
+    client = auth_client()
     
     # test get artist with valid id
     response = client.post(f'{endpoint}', artist)
@@ -65,14 +74,17 @@ def test_get_artist_success(client):
     
 
 @pytest.mark.django_db
-def test_update_artist_success(client):
+def test_update_artist_success(auth_client):
     # test update artist with valid data
     
     endpoint = '/artists/'
     artist = {
         "stage_name" : "Ahmed Hossam",
-        "social_link" : "https://www.facebook.com/ahmed.hossam.581"
+        "social_link" : "https://www.facebook.com/ahmed.hossam.581",
+        "user" : 1
     }
+    
+    client = auth_client()
     
     # create artist first
     response = client.post(f'{endpoint}', artist)
@@ -86,14 +98,17 @@ def test_update_artist_success(client):
     
 
 @pytest.mark.django_db
-def test_update_artist_failed(client):
+def test_update_artist_failed(auth_client):
     # test update artist with valid data
     
     endpoint = '/artists/'
     artist = {
         "stage_name" : "Ahmed Hossam",
-        "social_link" : "https://www.facebook.com/ahmed.hossam.581"
+        "social_link" : "https://www.facebook.com/ahmed.hossam.581",
+        "user" : 1
     }
+    
+    client = auth_client()
     
     # test update artist with invalid id
     response = client.put(f'{endpoint}1/', artist, kwargs={'pk': 1}, content_type='application/json')
@@ -110,14 +125,17 @@ def test_update_artist_failed(client):
 
 
 @pytest.mark.django_db
-def test_artist_delete_success(client):
+def test_artist_delete_success(auth_client):
     # test delete artist with valid id
     
     endpoint = '/artists/'
     artist = {
         "stage_name" : "Ahmed Hossam",
-        "social_link" : "https://www.facebook.com/ahmed.hossam.581"
+        "social_link" : "https://www.facebook.com/ahmed.hossam.581",
+        "user" : 1
     }
+    
+    client = auth_client()
     
     # create artist first
     response = client.post(f'{endpoint}', artist)

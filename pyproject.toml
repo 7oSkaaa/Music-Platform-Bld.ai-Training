@@ -22,6 +22,7 @@ pyyaml = "^6.0"
 pytest-django = "^4.5.2"
 django-dotenv = "^1.4.2"
 python-dotenv = "^0.21.0"
+django-filter = "^22.1"
 
 
 [build-system]

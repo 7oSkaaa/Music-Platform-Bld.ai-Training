@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'model_utils',
     'django_extensions',
     'rest_framework.authtoken',
+    'django_filters',
     
     # local apps
     'albums',
@@ -61,7 +62,12 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
 }
 
 ROOT_URLCONF = 'music_platform.urls'

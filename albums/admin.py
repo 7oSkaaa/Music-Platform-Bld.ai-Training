@@ -15,12 +15,6 @@ class AlbumAdmin(admin.ModelAdmin):
     fields = ['name', 'artist', 'release_date', 'cost', 'is_approved']
     inlines = [SongInLine]
     
-    
-    # return exception if album has no songs
-    def save_model(self, request, obj, form, change):
-        validate_albums_form(self, obj)
-        super().save_model(request, obj, form, change)
-
 
     # return album songs
     def album_songs(self, Album):
@@ -29,9 +23,9 @@ class AlbumAdmin(admin.ModelAdmin):
 
 class SongAdmin(admin.ModelAdmin):
     
-    fields = ['name', 'album', 'image', 'image_thumbnail', 'audio']
+    fields = ['name', 'album', 'image', 'audio']
 
 
 # register the model with the admin site
 admin.site.register(Album, AlbumAdmin)
-admin.site.register(Song)
+admin.site.register(Song, SongAdmin)

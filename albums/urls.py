@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import AlbumView
+from .views import AlbumView, AlbumFilterView
 
 urlpatterns = [
-    path('', AlbumView.as_view())
+    path('', AlbumView.as_view()),
+    path('filter/', AlbumFilterView.as_view())
 ]

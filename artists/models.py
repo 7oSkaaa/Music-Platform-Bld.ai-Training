@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q, Count
+from users.models import User
 
 
 class ArtistManager(models.Manager):
@@ -8,6 +9,7 @@ class ArtistManager(models.Manager):
 
 
 class Artist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='artist')
     stage_name = models.CharField(max_length=100, unique=True, blank=False, null=False)
     social_link = models.URLField(max_length=200, blank=True, null=False)
     objects = ArtistManager()
