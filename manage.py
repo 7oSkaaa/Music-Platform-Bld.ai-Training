@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """Django's command-line utility for administrative tasks."""
 import os, sys
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def main():
     """Run administrative tasks."""
